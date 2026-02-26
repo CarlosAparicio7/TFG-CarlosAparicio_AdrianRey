@@ -1,6 +1,5 @@
 package com.example.apiPeliculasTFG.entity;
 
-<<<<<<< HEAD
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
 import org.springframework.data.mongodb.core.mapping.Field;
@@ -83,8 +82,3 @@ public class Peliculas {
         this.pelicula = pelicula;
     }
 }
-=======
-public class Peliculas {
-	
-}
->>>>>>> 58ed56dcc304c0fe59fed4c8c9631b1f0c3dda79
