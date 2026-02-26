@@ -1,5 +1,10 @@
 package com.example.apiPeliculasTFG.repository;
 
-public interface PeliculasRepository {
+import com.example.apiPeliculasTFG.entity.Peliculas;
+import org.springframework.data.mongodb.repository.MongoRepository;
+import org.springframework.stereotype.Repository;
 
+@Repository
+public interface PeliculasRepository extends MongoRepository<Peliculas, String> {
+	
 }
