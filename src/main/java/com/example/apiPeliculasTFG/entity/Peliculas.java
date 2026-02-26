@@ -19,20 +19,44 @@ public class Peliculas {
     @JdbcTypeCode(Types.BINARY) // Esto obliga a Hibernate a enviar bytes y no un bigint
     private byte[] archivoVideo;
 
-    // --- GETTERS Y SETTERS ---
+	public Long getId() {
+		return id;
+	}
 
-    public Long getId() { return id; }
-    public void setId(Long id) { this.id = id; }
+	public void setId(Long id) {
+		this.id = id;
+	}
 
-    public String getNombre() { return nombre; }
-    public void setNombre(String nombre) { this.nombre = nombre; }
+	public String getNombre() {
+		return nombre;
+	}
 
-    public String getDescripcion() { return descripcion; }
-    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
+	public void setNombre(String nombre) {
+		this.nombre = nombre;
+	}
 
-    public double getValoracion() { return valoracion; }
-    public void setValoracion(double valoracion) { this.valoracion = valoracion; }
+	public String getDescripcion() {
+		return descripcion;
+	}
 
-    public byte[] getArchivoVideo() { return archivoVideo; }
-    public void setArchivoVideo(byte[] archivoVideo) { this.archivoVideo = archivoVideo; }
+	public void setDescripcion(String descripcion) {
+		this.descripcion = descripcion;
+	}
+
+	public double getValoracion() {
+		return valoracion;
+	}
+
+	public void setValoracion(double valoracion) {
+		this.valoracion = valoracion;
+	}
+
+	public byte[] getArchivoVideo() {
+		return archivoVideo;
+	}
+
+	public void setArchivoVideo(byte[] archivoVideo) {
+		this.archivoVideo = archivoVideo;
+	}
+    
 }
