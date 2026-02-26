@@ -1,4 +1,4 @@
-package com.example.apiPeliculasTFG.entity;
+/*package com.example.apiPeliculasTFG.entity;
 
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.mapping.Document;
@@ -69,3 +69,4 @@ public class Usuarios {
 	
 	
 }
+*/
