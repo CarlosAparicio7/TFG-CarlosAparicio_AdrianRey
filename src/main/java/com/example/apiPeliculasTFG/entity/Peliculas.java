@@ -1,90 +1,38 @@
 package com.example.apiPeliculasTFG.entity;
 
-<<<<<<< HEAD
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
-import org.springframework.data.mongodb.core.mapping.Field;
-import java.util.List;
+import jakarta.persistence.*;
+import org.hibernate.annotations.JdbcTypeCode;
+import java.sql.Types;
 
-@Document(collection = "peliculas")
+@Entity
 public class Peliculas {
+
     @Id
-    private String id;
-    
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private Long id;
+
     private String nombre;
     private String descripcion;
     private double valoracion;
-    
-    private List<Resenas> resena;
 
-    @Field("video_mp4")
-    private byte[] pelicula;
+    @Column(name = "archivo_video", columnDefinition = "bytea")
+    @JdbcTypeCode(Types.BINARY) // Esto obliga a Hibernate a enviar bytes y no un bigint
+    private byte[] archivoVideo;
 
-    public Peliculas(String id, String nombre, String descripcion, double valoracion, List<Resenas> resena,
-            byte[] pelicula) {
-        super();
-        this.id = id;
-        this.nombre = nombre;
-        this.descripcion = descripcion;
-        this.valoracion = valoracion;
-        this.resena = resena;
-        this.pelicula = pelicula;
-    }
+    // --- GETTERS Y SETTERS ---
 
-    public Peliculas() {
-        super();
-    }
+    public Long getId() { return id; }
+    public void setId(Long id) { this.id = id; }
 
-    public String getId() {
-        return id;
-    }
+    public String getNombre() { return nombre; }
+    public void setNombre(String nombre) { this.nombre = nombre; }
 
-    public void setId(String id) {
-        this.id = id;
-    }
+    public String getDescripcion() { return descripcion; }
+    public void setDescripcion(String descripcion) { this.descripcion = descripcion; }
 
-    public String getNombre() {
-        return nombre;
-    }
+    public double getValoracion() { return valoracion; }
+    public void setValoracion(double valoracion) { this.valoracion = valoracion; }
 
-    public void setNombre(String nombre) {
-        this.nombre = nombre;
-    }
-
-    public String getDescripcion() {
-        return descripcion;
-    }
-
-    public void setDescripcion(String descripcion) {
-        this.descripcion = descripcion;
-    }
-
-    public double getValoracion() {
-        return valoracion;
-    }
-
-    public void setValoracion(double valoracion) {
-        this.valoracion = valoracion;
-    }
-
-    public List<Resenas> getResena() {
-        return resena;
-    }
-
-    public void setResena(List<Resenas> resena) {
-        this.resena = resena;
-    }
-
-    public byte[] getPelicula() {
-        return pelicula;
-    }
-
-    public void setPelicula(byte[] pelicula) {
-        this.pelicula = pelicula;
-    }
+    public byte[] getArchivoVideo() { return archivoVideo; }
+    public void setArchivoVideo(byte[] archivoVideo) { this.archivoVideo = archivoVideo; }
 }
-=======
-public class Peliculas {
-	
-}
->>>>>>> 58ed56dcc304c0fe59fed4c8c9631b1f0c3dda79
