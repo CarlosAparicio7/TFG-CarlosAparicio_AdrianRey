@@ -18,9 +18,16 @@ public class Usuarios {
     private String apellido;
     private String avatarIcon;
     private String rol;
-
-	public Usuarios(Long id) {
+    
+	public Usuarios() {
 		super();
+	}
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
 		this.id = id;
 	}
 
