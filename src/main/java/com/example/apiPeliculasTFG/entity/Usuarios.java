@@ -1,36 +1,26 @@
-/*package com.example.apiPeliculasTFG.entity;
+package com.example.apiPeliculasTFG.entity;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
 
+
+import jakarta.persistence.*;
+
+@Entity
+@Table(name = "usuarios")
 public class Usuarios {
-	
-	@Id
-	private String id;
-	private String nombre;
-	private String apellido;
-	private String avatarIcon;
-	private String rol;
-	
-	public Usuarios() {
+    
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private Long id;
+    
+    @Column(nullable = false)
+    private String nombre;
+    
+    private String apellido;
+    private String avatarIcon;
+    private String rol;
+
+	public Usuarios(Long id) {
 		super();
-		// TODO Auto-generated constructor stub
-	}
-
-	public Usuarios(String id, String nombre, String apellido, String avatarIcon, String rol) {
-		super();
-		this.id = id;
-		this.nombre = nombre;
-		this.apellido = apellido;
-		this.avatarIcon = avatarIcon;
-		this.rol = rol;
-	}
-
-	public String getId() {
-		return id;
-	}
-
-	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -69,4 +59,4 @@ public class Usuarios {
 	
 	
 }
-*/
+

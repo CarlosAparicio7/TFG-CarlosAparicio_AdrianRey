@@ -9,3 +9,11 @@ CREATE TABLE IF NOT EXISTS public.peliculas
     valoracion double precision NOT NULL,
     CONSTRAINT peliculas_pkey PRIMARY KEY (id)
 );
+
+CREATE TABLE IF NOT EXISTS usuarios (
+    id SERIAL PRIMARY KEY,
+    nombre VARCHAR(255) NOT NULL,
+    apellido VARCHAR(255),
+    avatar_icon VARCHAR(255),
+    rol VARCHAR(50)
+);
