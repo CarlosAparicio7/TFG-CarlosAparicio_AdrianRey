@@ -5,7 +5,7 @@ package com.example.apiPeliculasTFG.entity;
 import jakarta.persistence.*;
 
 @Entity
-@Table(name = "usuarios")
+//@Table(name = "usuarios") No hace falta a no ser que cambie el nombre de la clase, ahi si lo necesito para seguir usando el mismo nombre para la tabla de la base de datos
 public class Usuarios {
     
     @Id
