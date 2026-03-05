@@ -3,8 +3,12 @@ package com.example.apiPeliculasTFG.controllers;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
+import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
+import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
@@ -39,5 +43,32 @@ public class UsuariosController {
         nuevoUsuario.setRol(rol);
         
         return usuariosService.crearUsuario(nuevoUsuario);
+    }
+    
+    @PutMapping("/actualizar/{id}")
+    public Usuarios actualizarUsuario(
+            @PathVariable Long id,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("avatarIcon") String avatarIcon,
+            @RequestParam("rol") String rol) {
+        
+        Usuarios usuarioData = new Usuarios();
+        usuarioData.setNombre(nombre);
+        usuarioData.setApellido(apellido);
+        usuarioData.setAvatarIcon(avatarIcon);
+        usuarioData.setRol(rol);
+        
+        return usuariosService.actualizarUsuario(id, usuarioData);
+    }
+    
+    @DeleteMapping("/borrar/{id}")
+    public ResponseEntity<String> borrarUsuario(@PathVariable Long id) {
+        try {
+            usuariosService.eliminarUsuario(id);
+            return ResponseEntity.ok("Usuario con ID " + id + " eliminado correctamente.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
     }
 }

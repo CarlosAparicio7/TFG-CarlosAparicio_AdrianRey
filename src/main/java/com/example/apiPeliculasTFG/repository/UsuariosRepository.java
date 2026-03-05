@@ -6,5 +6,5 @@ import com.example.apiPeliculasTFG.entity.Usuarios;
 
 @Repository
 public interface UsuariosRepository extends JpaRepository<Usuarios, Long> {
-
+	void deleteById(Long id);
 }
