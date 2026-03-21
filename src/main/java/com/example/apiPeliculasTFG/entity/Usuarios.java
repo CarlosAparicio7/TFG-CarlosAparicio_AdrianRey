@@ -19,6 +19,15 @@ public class Usuarios {
     private String avatarIcon;
     private String rol;
     
+	public Usuarios(Long id, String nombre, String apellido, String avatarIcon, String rol) {
+		super();
+		this.id = id;
+		this.nombre = nombre;
+		this.apellido = apellido;
+		this.avatarIcon = avatarIcon;
+		this.rol = rol;
+	}
+
 	public Usuarios() {
 		super();
 	}
