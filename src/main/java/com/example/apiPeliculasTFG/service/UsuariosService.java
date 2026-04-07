@@ -1,6 +1,7 @@
 package com.example.apiPeliculasTFG.service;
 
 import java.util.List;
+import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -10,6 +11,7 @@ import com.example.apiPeliculasTFG.repository.UsuariosRepository;
 
 @Service
 public class UsuariosService {
+
     @Autowired
     private UsuariosRepository usuariosRepository;
 
@@ -27,6 +29,8 @@ public class UsuariosService {
             usuarioExistente.setApellido(usuarioActualizado.getApellido());
             usuarioExistente.setAvatarIcon(usuarioActualizado.getAvatarIcon());
             usuarioExistente.setRol(usuarioActualizado.getRol());
+            usuarioExistente.setEmail(usuarioActualizado.getEmail());
+            usuarioExistente.setPassword(usuarioActualizado.getPassword());
             
             return usuariosRepository.save(usuarioExistente);
         }).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
@@ -38,5 +42,15 @@ public class UsuariosService {
         } else {
             throw new RuntimeException("Usuario no encontrado con ID: " + id);
         }
+    }
+
+    public Usuarios login(String email, String password) {
+        Optional<Usuarios> usuario = usuariosRepository.findByEmail(email);
+        
+        if (usuario.isPresent() && usuario.get().getPassword().equals(password)) {
+            return usuario.get();
+        }
+        
+        return null;
     }
 }

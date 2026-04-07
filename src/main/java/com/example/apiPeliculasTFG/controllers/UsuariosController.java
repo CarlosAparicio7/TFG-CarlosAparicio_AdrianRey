@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
-import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
@@ -69,6 +68,39 @@ public class UsuariosController {
             return ResponseEntity.ok("Usuario con ID " + id + " eliminado correctamente.");
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
+
+    @PostMapping("/crearSesion")
+    public Usuarios crearSesion(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+        
+        Usuarios nuevoUsuario = new Usuarios();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setApellido(apellido);
+        nuevoUsuario.setEmail(email);
+        nuevoUsuario.setPassword(password);
+        
+        nuevoUsuario.setAvatarIcon("");
+        nuevoUsuario.setRol("USER");
+        
+        return usuariosService.crearUsuario(nuevoUsuario);
+    }
+
+    @PostMapping("/iniciarSesion")
+    public ResponseEntity<?> iniciarSesion(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+        
+        Usuarios usuario = usuariosService.login(email, password);
+        
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(401).body("Credenciales incorrectas");
         }
     }
 }
