@@ -16,7 +16,7 @@ public class Peliculas {
     private double valoracion;
 
     @Column(name = "archivo_video", columnDefinition = "bytea")
-    @JdbcTypeCode(Types.BINARY) // Esto obliga a Hibernate a enviar bytes y no un bigint
+    @JdbcTypeCode(Types.BINARY)
     private byte[] archivoVideo;
     
 	public Peliculas(Long id, String nombre, String descripcion, double valoracion, byte[] archivoVideo) {
