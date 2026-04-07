@@ -48,11 +48,6 @@
 			<artifactId>spring-boot-starter-test</artifactId>
 			<scope>test</scope>
 		</dependency>
-		<dependency>
-			<groupId>com.example</groupId>
-			<artifactId>aplicacionEquipoFutbol</artifactId>
-			<version>0.0.1-SNAPSHOT</version>
-		</dependency>
 	</dependencies>
 
 	<build>
@@ -71,5 +66,5 @@
 			</plugin>
 		</plugins>
 	</build>
-	
+
 </project>
