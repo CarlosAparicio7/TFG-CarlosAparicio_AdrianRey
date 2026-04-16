@@ -1,35 +1,20 @@
 package com.example.apiPeliculasTFG.entity;
 
-import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import java.sql.Types;
+public class PeliculaDTO {
 
-@Entity
-public class Peliculas {
-
-    @Id
-    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
-
     private String nombre;
     private String descripcion;
     private double valoracion;
 
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "archivo_video", columnDefinition = "bytea")
-    @JdbcTypeCode(Types.BINARY)
-    private byte[] archivoVideo;
-
-    public Peliculas() {
+    public PeliculaDTO() {
     }
 
-    public Peliculas(String id, String nombre, String descripcion, double valoracion, byte[] archivoVideo) {
+    public PeliculaDTO(String id, String nombre, String descripcion, double valoracion) {
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
         this.valoracion = valoracion;
-        this.archivoVideo = archivoVideo;
     }
 
     public String getId() {
@@ -62,13 +47,5 @@ public class Peliculas {
 
     public void setValoracion(double valoracion) {
         this.valoracion = valoracion;
-    }
-
-    public byte[] getArchivoVideo() {
-        return archivoVideo;
-    }
-
-    public void setArchivoVideo(byte[] archivoVideo) {
-        this.archivoVideo = archivoVideo;
     }
 }

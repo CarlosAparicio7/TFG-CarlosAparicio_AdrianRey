@@ -1,16 +1,13 @@
 package com.example.apiPeliculasTFG.service;
 
 import com.example.apiPeliculasTFG.entity.Peliculas;
+import com.example.apiPeliculasTFG.entity.PeliculaDTO;
 import com.example.apiPeliculasTFG.repository.PeliculasRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
-
 import java.io.IOException;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.stream.Collectors;
 
 @Service
 public class PeliculasService {
@@ -27,34 +24,23 @@ public class PeliculasService {
         return peliculasRepository.save(peli);
     }
 
-    public List<Map<String, Object>> obtenerTodas() {
-        return peliculasRepository.findAll().stream().map(peli -> {
-            Map<String, Object> dto = new HashMap<>();
-            dto.put("id", peli.getId());
-            dto.put("nombre", peli.getNombre());
-            dto.put("descripcion", peli.getDescripcion());
-            dto.put("valoracion", peli.getValoracion());
-            dto.put("urlVideo", "http://localhost:8080/peliculas/verPelicula/" + peli.getId());
-            return dto;
-        }).collect(Collectors.toList());
+    public List<PeliculaDTO> obtenerTodasDTO() {
+        return peliculasRepository.findAllDTO();
     }
 
     public Peliculas buscarPorId(String id) {
         return peliculasRepository.findById(id)
-                .orElseThrow(() -> new RuntimeException("Película con ID " + id + " no encontrada"));
+                .orElseThrow(() -> new RuntimeException("Película no encontrada"));
     }
 
     public Peliculas actualizarPelicula(String id, String nombre, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
         Peliculas peli = buscarPorId(id);
-        
         peli.setNombre(nombre);
         peli.setDescripcion(descripcion);
         peli.setValoracion(valoracion);
-
         if (archivo != null && !archivo.isEmpty()) {
             peli.setArchivoVideo(archivo.getBytes());
         }
-
         return peliculasRepository.save(peli);
     }
 

@@ -1,6 +1,7 @@
 package com.example.apiPeliculasTFG.controllers;
 
 import com.example.apiPeliculasTFG.entity.Peliculas;
+import com.example.apiPeliculasTFG.entity.PeliculaDTO;
 import com.example.apiPeliculasTFG.service.PeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.core.io.ByteArrayResource;
@@ -13,7 +14,6 @@ import org.springframework.web.multipart.MultipartFile;
 
 import java.io.IOException;
 import java.util.List;
-import java.util.Map;
 
 @RestController
 @RequestMapping("/peliculas")
@@ -38,8 +38,8 @@ public class PeliculasController {
     }
 
     @GetMapping("/listarPeliculas")
-    public List<Map<String, Object>> listarTodas() {
-        return peliculasService.obtenerTodas();
+    public List<PeliculaDTO> listarTodas() {
+        return peliculasService.obtenerTodasDTO();
     }
 
     @GetMapping("/verPelicula/{id}")
