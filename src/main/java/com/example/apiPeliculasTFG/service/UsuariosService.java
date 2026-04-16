@@ -18,11 +18,11 @@ public class UsuariosService {
     public List<Usuarios> obtenerTodos() {
         return usuariosRepository.findAll();
     }
-    
+        
     public Usuarios crearUsuario(Usuarios usuario) {
         return usuariosRepository.save(usuario);
     }
-    
+        
     public Usuarios actualizarUsuario(String id, Usuarios usuarioActualizado) {
         return usuariosRepository.findById(id).map(usuarioExistente -> {
             usuarioExistente.setNombre(usuarioActualizado.getNombre());
@@ -35,7 +35,7 @@ public class UsuariosService {
             return usuariosRepository.save(usuarioExistente);
         }).orElseThrow(() -> new RuntimeException("Usuario no encontrado con ID: " + id));
     }
-    
+        
     public void eliminarUsuario(String id) {
         if (usuariosRepository.existsById(id)) {
             usuariosRepository.deleteById(id);
@@ -45,12 +45,8 @@ public class UsuariosService {
     }
 
     public Usuarios login(String email, String password) {
-        Optional<Usuarios> usuario = usuariosRepository.findByEmail(email);
-        
-        if (usuario.isPresent() && usuario.get().getPassword().equals(password)) {
-            return usuario.get();
-        }
-        
-        return null;
+        return usuariosRepository.findByEmail(email)
+                .filter(u -> u.getPassword().equals(password))
+                .orElseThrow(() -> new RuntimeException("Credenciales incorrectas"));
     }
 }
