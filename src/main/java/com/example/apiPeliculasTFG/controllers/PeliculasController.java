@@ -20,56 +20,56 @@ import java.util.Map;
 @CrossOrigin(origins = "*")
 public class PeliculasController {
 
-    @Autowired
-    private PeliculasService peliculasService;
+    @Autowired
+    private PeliculasService peliculasService;
 
-    @PostMapping("/subirPelicula")
-    public ResponseEntity<Peliculas> subirPelicula(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("descripcion") String descripcion,
-            @RequestParam("valoracion") double valoracion,
-            @RequestParam("archivo") MultipartFile archivo) {
-        try {
-            Peliculas nueva = peliculasService.guardarPelicula(nombre, descripcion, valoracion, archivo);
-            return ResponseEntity.ok(nueva);
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
+    @PostMapping("/subirPelicula")
+    public ResponseEntity<Peliculas> subirPelicula(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("valoracion") double valoracion,
+            @RequestParam("archivo") MultipartFile archivo) {
+        try {
+            Peliculas nueva = peliculasService.guardarPelicula(nombre, descripcion, valoracion, archivo);
+            return ResponseEntity.ok(nueva);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
-    @GetMapping("/listarPeliculas")
-    public List<Map<String, Object>> listarTodas() {
-        return peliculasService.obtenerTodas();
-    }
+    @GetMapping("/listarPeliculas")
+    public List<Map<String, Object>> listarTodas() {
+        return peliculasService.obtenerTodas();
+    }
 
-    @GetMapping("/verPelicula/{id}")
-    public ResponseEntity<Resource> verVideo(@PathVariable String id) {
-        Peliculas peli = peliculasService.buscarPorId(id);
-        
-        return ResponseEntity.ok()
-                .contentType(MediaType.parseMediaType("video/mp4"))
-                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + peli.getNombre() + ".mp4\"")
-                .body(new ByteArrayResource(peli.getArchivoVideo()));
-    }
+    @GetMapping("/verPelicula/{id}")
+    public ResponseEntity<Resource> verVideo(@PathVariable String id) {
+        Peliculas peli = peliculasService.buscarPorId(id);
+        
+        return ResponseEntity.ok()
+                .contentType(MediaType.parseMediaType("video/mp4"))
+                .header(HttpHeaders.CONTENT_DISPOSITION, "inline; filename=\"" + peli.getNombre() + ".mp4\"")
+                .body(new ByteArrayResource(peli.getArchivoVideo()));
+    }
 
-    @PutMapping("/editarPelicula/{id}")
-    public ResponseEntity<Peliculas> editarPelicula(
-            @PathVariable String id,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("descripcion") String descripcion,
-            @RequestParam("valoracion") double valoracion,
-            @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
-        try {
-            Peliculas editada = peliculasService.actualizarPelicula(id, nombre, descripcion, valoracion, archivo);
-            return ResponseEntity.ok(editada);
-        } catch (IOException e) {
-            return ResponseEntity.internalServerError().build();
-        }
-    }
+    @PutMapping("/editarPelicula/{id}")
+    public ResponseEntity<Peliculas> editarPelicula(
+            @PathVariable String id,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("valoracion") double valoracion,
+            @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
+        try {
+            Peliculas editada = peliculasService.actualizarPelicula(id, nombre, descripcion, valoracion, archivo);
+            return ResponseEntity.ok(editada);
+        } catch (IOException e) {
+            return ResponseEntity.internalServerError().build();
+        }
+    }
 
-    @DeleteMapping("/eliminarPelicula/{id}")
-    public ResponseEntity<Void> eliminarPelicula(@PathVariable String id) {
-        peliculasService.borrarPelicula(id);
-        return ResponseEntity.noContent().build();
-    }
+    @DeleteMapping("/eliminarPelicula/{id}")
+    public ResponseEntity<Void> eliminarPelicula(@PathVariable String id) {
+        peliculasService.borrarPelicula(id);
+        return ResponseEntity.noContent().build();
+    }
 }

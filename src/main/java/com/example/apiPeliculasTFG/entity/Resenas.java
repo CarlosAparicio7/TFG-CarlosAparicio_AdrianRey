@@ -7,45 +7,46 @@ import jakarta.persistence.Id;
 
 @Entity
 public class Resenas {
-	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    private String id;
-	
-	private String comentario;
-	private double numeroEstrellas;
-	
-	public Resenas(String id, String comentario, double numeroEstrellas) {
-		super();
-		this.id = id;
-		this.comentario = comentario;
-		this.numeroEstrellas = numeroEstrellas;
-	}
 
-	public Resenas() {
-		super();
-	}
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private String id;
+    
+    private String comentario;
+    private double numeroEstrellas;
+    
+    public Resenas(String id, String comentario, double numeroEstrellas) {
+        super();
+        this.id = id;
+        this.comentario = comentario;
+        this.numeroEstrellas = numeroEstrellas;
+    }
 
-	public String getId() {
-		return id;
-	}
+    public Resenas() {
+        super();
+    }
 
-	public void setId(String id) {
-		this.id = id;
-	}
+    public String getId() {
+        return id;
+    }
 
-	public String getComentario() {
-		return comentario;
-	}
+    public void setId(String id) {
+        this.id = id;
+    }
 
-	public void setComentario(String comentario) {
-		this.comentario = comentario;
-	}
+    public String getComentario() {
+        return comentario;
+    }
 
-	public double getNumeroEstrellas() {
-		return numeroEstrellas;
-	}
+    public void setComentario(String comentario) {
+        this.comentario = comentario;
+    }
 
-	public void setNumeroEstrellas(double numeroEstrellas) {
-		this.numeroEstrellas = numeroEstrellas;
-	}
+    public double getNumeroEstrellas() {
+        return numeroEstrellas;
+    }
+
+    public void setNumeroEstrellas(double numeroEstrellas) {
+        this.numeroEstrellas = numeroEstrellas;
+    }
 }
