@@ -9,21 +9,19 @@ import jakarta.persistence.Id;
 public class Resenas {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     
     private String comentario;
     private double numeroEstrellas;
     
     public Resenas(String id, String comentario, double numeroEstrellas) {
-        super();
         this.id = id;
         this.comentario = comentario;
         this.numeroEstrellas = numeroEstrellas;
     }
 
     public Resenas() {
-        super();
     }
 
     public String getId() {

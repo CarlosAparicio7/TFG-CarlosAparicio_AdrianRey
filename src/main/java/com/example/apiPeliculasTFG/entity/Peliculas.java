@@ -8,7 +8,7 @@ import java.sql.Types;
 public class Peliculas {
 
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
 
     private String nombre;
@@ -20,7 +20,6 @@ public class Peliculas {
     private byte[] archivoVideo;
     
     public Peliculas(String id, String nombre, String descripcion, double valoracion, byte[] archivoVideo) {
-        super();
         this.id = id;
         this.nombre = nombre;
         this.descripcion = descripcion;
@@ -29,7 +28,6 @@ public class Peliculas {
     }
 
     public Peliculas() {
-        super();
     }
 
     public String getId() {

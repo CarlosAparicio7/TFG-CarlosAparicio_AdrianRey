@@ -6,7 +6,7 @@ import jakarta.persistence.*;
 public class Usuarios {
     
     @Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    @GeneratedValue(strategy = GenerationType.UUID) 
     private String id;
     
     @Column(nullable = false)
@@ -23,7 +23,6 @@ public class Usuarios {
     private String password;
     
     public Usuarios(String id, String nombre, String apellido, String avatarIcon, String rol, String email, String password) {
-        super();
         this.id = id;
         this.nombre = nombre;
         this.apellido = apellido;
@@ -34,7 +33,6 @@ public class Usuarios {
     }
 
     public Usuarios() {
-        super();
     }
 
     public String getId() {
@@ -93,4 +91,3 @@ public class Usuarios {
         this.password = password;
     }
 }
-
