@@ -30,38 +30,38 @@ public class ResenasController {
 	}
 	
 	@PostMapping("/crear")
-    public Resenas crearResena(
-            @RequestParam("comentario") String comentario,
-            @RequestParam("numeroEstrellas") double numeroEstrellas) {
-        
-        Resenas nuevoResena = new Resenas();
-        
-        nuevoResena.setComentario(comentario);
-        nuevoResena.setNumeroEstrellas(numeroEstrellas);
-        
-        return resenasService.crearResena(nuevoResena);
-    }
+    public Resenas crearResena(
+            @RequestParam("comentario") String comentario,
+            @RequestParam("numeroEstrellas") double numeroEstrellas) {
+        
+        Resenas nuevoResena = new Resenas();
+        
+        nuevoResena.setComentario(comentario);
+        nuevoResena.setNumeroEstrellas(numeroEstrellas);
+        
+        return resenasService.crearResena(nuevoResena);
+    }
 	
 	@PutMapping("/actualizar/{id}")
 	public Resenas actualizarResena(
-            @PathVariable Long id,
-            @RequestParam("comentario") String comentario,
-            @RequestParam("numeroEstrellas") double numeroEstrellas) {
-        
-        Resenas resenaData = new Resenas();
-        resenaData.setComentario(comentario);
-        resenaData.setNumeroEstrellas(numeroEstrellas);
-        
-        return resenasService.actualizarResena(id, resenaData);
-    }
+            @PathVariable String id,
+            @RequestParam("comentario") String comentario,
+            @RequestParam("numeroEstrellas") double numeroEstrellas) {
+        
+        Resenas resenaData = new Resenas();
+        resenaData.setComentario(comentario);
+        resenaData.setNumeroEstrellas(numeroEstrellas);
+        
+        return resenasService.actualizarResena(id, resenaData);
+    }
 	
 	@DeleteMapping("/borrar/{id}")
-    public ResponseEntity<String> borrarResena(@PathVariable Long id) {
-        try {
-            resenasService.eliminarResena(id);
-            return ResponseEntity.ok("Resena con ID " + id + " eliminada correctamente.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
-    }
+    public ResponseEntity<String> borrarResena(@PathVariable String id) {
+        try {
+            resenasService.eliminarResena(id);
+            return ResponseEntity.ok("Resena con ID " + id + " eliminada correctamente.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 }

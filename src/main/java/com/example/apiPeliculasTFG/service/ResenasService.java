@@ -20,10 +20,10 @@ public class ResenasService {
 	}
 	
 	public Resenas crearResena(Resenas resena) {
-        return resenasRepository.save(resena);
-    }
+        return resenasRepository.save(resena);
+    }
 	
-	public Resenas actualizarResena(Long id, Resenas resenaActualizada) {
+	public Resenas actualizarResena(String id, Resenas resenaActualizada) {
 		return resenasRepository.findById(id).map(resenaExistente -> {
 			resenaExistente.setComentario(resenaActualizada.getComentario());
 			resenaExistente.setNumeroEstrellas(resenaActualizada.getNumeroEstrellas());
@@ -33,11 +33,11 @@ public class ResenasService {
 		
 	}
 	
-	public void eliminarResena(Long id) {
-	    if (resenasRepository.existsById(id)) {
-	    	resenasRepository.deleteById(id);
-	    } else {
-	            throw new RuntimeException("Resena no encontrada con ID: " + id);
-	    }
+	public void eliminarResena(String id) {
+	    if (resenasRepository.existsById(id)) {
+	    	resenasRepository.deleteById(id);
+	    } else {
+	            throw new RuntimeException("Resena no encontrada con ID: " + id);
+	    }
 	}
 }

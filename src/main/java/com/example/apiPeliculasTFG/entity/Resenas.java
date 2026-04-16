@@ -8,13 +8,13 @@ import jakarta.persistence.Id;
 @Entity
 public class Resenas {
 	@Id
-    @GeneratedValue(strategy = GenerationType.IDENTITY) 
-    private Long id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY) 
+    private String id;
 	
 	private String comentario;
 	private double numeroEstrellas;
 	
-	public Resenas(Long id, String comentario, double numeroEstrellas) {
+	public Resenas(String id, String comentario, double numeroEstrellas) {
 		super();
 		this.id = id;
 		this.comentario = comentario;
@@ -25,11 +25,11 @@ public class Resenas {
 		super();
 	}
 
-	public Long getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(Long id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 
@@ -48,6 +48,4 @@ public class Resenas {
 	public void setNumeroEstrellas(double numeroEstrellas) {
 		this.numeroEstrellas = numeroEstrellas;
 	}
-	
-	
 }

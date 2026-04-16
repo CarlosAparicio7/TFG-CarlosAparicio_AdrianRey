@@ -39,12 +39,12 @@ public class PeliculasService {
         }).collect(Collectors.toList());
     }
 
-    public Peliculas buscarPorId(Long id) {
+    public Peliculas buscarPorId(String id) {
         return peliculasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Película con ID " + id + " no encontrada"));
     }
 
-    public Peliculas actualizarPelicula(Long id, String nombre, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
+    public Peliculas actualizarPelicula(String id, String nombre, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
         Peliculas peli = buscarPorId(id);
         
         peli.setNombre(nombre);
@@ -58,7 +58,7 @@ public class PeliculasService {
         return peliculasRepository.save(peli);
     }
 
-    public void borrarPelicula(Long id) {
+    public void borrarPelicula(String id) {
         if (!peliculasRepository.existsById(id)) {
             throw new RuntimeException("No se puede eliminar: Película no encontrada");
         }

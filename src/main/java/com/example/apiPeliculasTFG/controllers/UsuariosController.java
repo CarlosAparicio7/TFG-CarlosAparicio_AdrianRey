@@ -20,87 +20,87 @@ import com.example.apiPeliculasTFG.service.UsuariosService;
 @RequestMapping("/usuarios")
 public class UsuariosController {
 
-    @Autowired
-    private UsuariosService usuariosService;
+    @Autowired
+    private UsuariosService usuariosService;
 
-    @GetMapping("/listar")
-    public List<Usuarios> listarUsuarios() {
-        return usuariosService.obtenerTodos();
-    }
-    
-    @PostMapping("/crear")
-    public Usuarios crearUsuario(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("avatarIcon") String avatarIcon,
-            @RequestParam("rol") String rol) {
-        
-        Usuarios nuevoUsuario = new Usuarios();
-        nuevoUsuario.setNombre(nombre);
-        nuevoUsuario.setApellido(apellido);
-        nuevoUsuario.setAvatarIcon(avatarIcon);
-        nuevoUsuario.setRol(rol);
-        
-        return usuariosService.crearUsuario(nuevoUsuario);
-    }
-    
-    @PutMapping("/actualizar/{id}")
-    public Usuarios actualizarUsuario(
-            @PathVariable Long id,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("avatarIcon") String avatarIcon,
-            @RequestParam("rol") String rol) {
-        
-        Usuarios usuarioData = new Usuarios();
-        usuarioData.setNombre(nombre);
-        usuarioData.setApellido(apellido);
-        usuarioData.setAvatarIcon(avatarIcon);
-        usuarioData.setRol(rol);
-        
-        return usuariosService.actualizarUsuario(id, usuarioData);
-    }
-    
-    @DeleteMapping("/borrar/{id}")
-    public ResponseEntity<String> borrarUsuario(@PathVariable Long id) {
-        try {
-            usuariosService.eliminarUsuario(id);
-            return ResponseEntity.ok("Usuario con ID " + id + " eliminado correctamente.");
-        } catch (RuntimeException e) {
-            return ResponseEntity.status(404).body(e.getMessage());
-        }
-    }
+    @GetMapping("/listar")
+    public List<Usuarios> listarUsuarios() {
+        return usuariosService.obtenerTodos();
+    }
+    
+    @PostMapping("/crear")
+    public Usuarios crearUsuario(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("avatarIcon") String avatarIcon,
+            @RequestParam("rol") String rol) {
+        
+        Usuarios nuevoUsuario = new Usuarios();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setApellido(apellido);
+        nuevoUsuario.setAvatarIcon(avatarIcon);
+        nuevoUsuario.setRol(rol);
+        
+        return usuariosService.crearUsuario(nuevoUsuario);
+    }
+    
+    @PutMapping("/actualizar/{id}")
+    public Usuarios actualizarUsuario(
+            @PathVariable String id,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("avatarIcon") String avatarIcon,
+            @RequestParam("rol") String rol) {
+        
+        Usuarios usuarioData = new Usuarios();
+        usuarioData.setNombre(nombre);
+        usuarioData.setApellido(apellido);
+		usuarioData.setAvatarIcon(avatarIcon);
+        usuarioData.setRol(rol);
+        
+        return usuariosService.actualizarUsuario(id, usuarioData);
+    }
+    
+    @DeleteMapping("/borrar/{id}")
+    public ResponseEntity<String> borrarUsuario(@PathVariable String id) {
+        try {
+            usuariosService.eliminarUsuario(id);
+            return ResponseEntity.ok("Usuario con ID " + id + " eliminado correctamente.");
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).body(e.getMessage());
+        }
+    }
 
-    @PostMapping("/crearSesion")
-    public Usuarios crearSesion(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
-        
-        Usuarios nuevoUsuario = new Usuarios();
-        nuevoUsuario.setNombre(nombre);
-        nuevoUsuario.setApellido(apellido);
-        nuevoUsuario.setEmail(email);
-        nuevoUsuario.setPassword(password);
-        
-        nuevoUsuario.setAvatarIcon("");
-        nuevoUsuario.setRol("USER");
-        
-        return usuariosService.crearUsuario(nuevoUsuario);
-    }
+    @PostMapping("/crearSesion")
+    public Usuarios crearSesion(
+            @RequestParam("nombre") String nombre,
+            @RequestParam("apellido") String apellido,
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+        
+        Usuarios nuevoUsuario = new Usuarios();
+        nuevoUsuario.setNombre(nombre);
+        nuevoUsuario.setApellido(apellido);
+        nuevoUsuario.setEmail(email);
+        nuevoUsuario.setPassword(password);
+        
+        nuevoUsuario.setAvatarIcon("");
+        nuevoUsuario.setRol("USER");
+        
+        return usuariosService.crearUsuario(nuevoUsuario);
+    }
 
-    @PostMapping("/iniciarSesion")
-    public ResponseEntity<?> iniciarSesion(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
-        
-        Usuarios usuario = usuariosService.login(email, password);
-        
-        if (usuario != null) {
-            return ResponseEntity.ok(usuario);
-        } else {
-            return ResponseEntity.status(401).body("Credenciales incorrectas");
-        }
-    }
+    @PostMapping("/iniciarSesion")
+    public ResponseEntity<?> iniciarSesion(
+            @RequestParam("email") String email,
+            @RequestParam("password") String password) {
+        
+        Usuarios usuario = usuariosService.login(email, password);
+        
+        if (usuario != null) {
+            return ResponseEntity.ok(usuario);
+        } else {
+            return ResponseEntity.status(401).body("Credenciales incorrectas");
+        }
+    }
 }
