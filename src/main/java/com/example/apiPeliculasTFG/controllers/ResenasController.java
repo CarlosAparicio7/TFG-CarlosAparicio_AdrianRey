@@ -15,12 +15,12 @@ public class ResenasController {
     @Autowired
     private ResenasService resenasService;
 
-    @GetMapping("/listar")
+    @GetMapping("/listarResenas")
     public List<Resenas> listarResenas() {
         return resenasService.obtenerTodos();
     }
 
-    @PostMapping("/crear")
+    @PostMapping("/crearResena")
     public Resenas crearResena(
             @RequestParam("comentario") String comentario,
             @RequestParam("numeroEstrellas") double numeroEstrellas) {
@@ -32,7 +32,7 @@ public class ResenasController {
         return resenasService.crearResena(nuevoResena);
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/actualizarResena/{id}")
     public Resenas actualizarResena(
             @PathVariable String id,
             @RequestParam("comentario") String comentario,
@@ -45,7 +45,7 @@ public class ResenasController {
         return resenasService.actualizarResena(id, resenaData);
     }
 
-    @DeleteMapping("/borrar/{id}")
+    @DeleteMapping("/borrarResena/{id}")
     public ResponseEntity<String> borrarResena(@PathVariable String id) {
         try {
             resenasService.eliminarResena(id);

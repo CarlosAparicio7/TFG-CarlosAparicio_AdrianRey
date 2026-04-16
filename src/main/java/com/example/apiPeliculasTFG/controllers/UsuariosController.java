@@ -15,12 +15,12 @@ public class UsuariosController {
     @Autowired
     private UsuariosService usuariosService;
 
-    @GetMapping("/listar")
+    @GetMapping("/listarUsuarios")
     public List<Usuarios> listarUsuarios() {
         return usuariosService.obtenerTodos();
     }
 
-    @PostMapping("/crear")
+    @PostMapping("/crearUsuario")
     public Usuarios crearUsuario(
             @RequestParam("nombre") String nombre,
             @RequestParam("apellido") String apellido,
@@ -36,7 +36,7 @@ public class UsuariosController {
         return usuariosService.crearUsuario(nuevoUsuario);
     }
 
-    @PutMapping("/actualizar/{id}")
+    @PutMapping("/actualizarUsuario/{id}")
     public Usuarios actualizarUsuario(
             @PathVariable String id,
             @RequestParam("nombre") String nombre,
@@ -53,7 +53,7 @@ public class UsuariosController {
         return usuariosService.actualizarUsuario(id, usuarioData);
     }
 
-    @DeleteMapping("/borrar/{id}")
+    @DeleteMapping("/borrarUsuario/{id}")
     public ResponseEntity<String> borrarUsuario(@PathVariable String id) {
         try {
             usuariosService.eliminarUsuario(id);
