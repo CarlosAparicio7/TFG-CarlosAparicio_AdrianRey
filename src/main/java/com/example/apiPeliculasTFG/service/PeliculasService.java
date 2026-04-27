@@ -15,9 +15,10 @@ public class PeliculasService {
     @Autowired
     private PeliculasRepository peliculasRepository;
 
-    public Peliculas guardarPelicula(String nombre, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
+    public Peliculas guardarPelicula(String nombre, String portada, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
         Peliculas peli = new Peliculas();
         peli.setNombre(nombre);
+        peli.setPortada(portada);
         peli.setDescripcion(descripcion);
         peli.setValoracion(valoracion);
         peli.setArchivoVideo(archivo.getBytes());
@@ -33,9 +34,10 @@ public class PeliculasService {
                 .orElseThrow(() -> new RuntimeException("Película no encontrada"));
     }
 
-    public Peliculas actualizarPelicula(String id, String nombre, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
+    public Peliculas actualizarPelicula(String id, String nombre, String portada, String descripcion, double valoracion, MultipartFile archivo) throws IOException {
         Peliculas peli = buscarPorId(id);
         peli.setNombre(nombre);
+        peli.setPortada(portada);
         peli.setDescripcion(descripcion);
         peli.setValoracion(valoracion);
         if (archivo != null && !archivo.isEmpty()) {

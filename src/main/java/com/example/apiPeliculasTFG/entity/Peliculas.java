@@ -12,6 +12,7 @@ public class Peliculas {
     private String id;
 
     private String nombre;
+    private String portada;
     private String descripcion;
     private double valoracion;
 
@@ -24,9 +25,10 @@ public class Peliculas {
     public Peliculas() {
     }
 
-    public Peliculas(String id, String nombre, String descripcion, double valoracion, byte[] archivoVideo) {
+    public Peliculas(String id, String nombre, String portada, String descripcion, double valoracion, byte[] archivoVideo) {
         this.id = id;
         this.nombre = nombre;
+        this.portada = portada;
         this.descripcion = descripcion;
         this.valoracion = valoracion;
         this.archivoVideo = archivoVideo;
@@ -48,7 +50,15 @@ public class Peliculas {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
+    public String getPortada() {
+		return portada;
+	}
+
+	public void setPortada(String portada) {
+		this.portada = portada;
+	}
+
+	public String getDescripcion() {
         return descripcion;
     }
 

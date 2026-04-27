@@ -26,11 +26,12 @@ public class PeliculasController {
     @PostMapping("/subirPelicula")
     public ResponseEntity<Peliculas> subirPelicula(
             @RequestParam("nombre") String nombre,
+            @RequestParam("portada") String portada,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("valoracion") double valoracion,
             @RequestParam("archivo") MultipartFile archivo) {
         try {
-            Peliculas nueva = peliculasService.guardarPelicula(nombre, descripcion, valoracion, archivo);
+            Peliculas nueva = peliculasService.guardarPelicula(nombre, portada, descripcion, valoracion, archivo);
             return ResponseEntity.ok(nueva);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
@@ -56,11 +57,12 @@ public class PeliculasController {
     public ResponseEntity<Peliculas> editarPelicula(
             @PathVariable String id,
             @RequestParam("nombre") String nombre,
+            @RequestParam("portada") String portada,
             @RequestParam("descripcion") String descripcion,
             @RequestParam("valoracion") double valoracion,
             @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
         try {
-            Peliculas editada = peliculasService.actualizarPelicula(id, nombre, descripcion, valoracion, archivo);
+            Peliculas editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, valoracion, archivo);
             return ResponseEntity.ok(editada);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();

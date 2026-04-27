@@ -4,15 +4,17 @@ public class PeliculaDTO {
 
     private String id;
     private String nombre;
+    private String portada;
     private String descripcion;
     private double valoracion;
 
     public PeliculaDTO() {
     }
 
-    public PeliculaDTO(String id, String nombre, String descripcion, double valoracion) {
+    public PeliculaDTO(String id, String nombre, String portada, String descripcion, double valoracion) {
         this.id = id;
         this.nombre = nombre;
+        this.portada = portada;
         this.descripcion = descripcion;
         this.valoracion = valoracion;
     }
@@ -33,7 +35,15 @@ public class PeliculaDTO {
         this.nombre = nombre;
     }
 
-    public String getDescripcion() {
+    public String getPortada() {
+		return portada;
+	}
+
+	public void setPortada(String portada) {
+		this.portada = portada;
+	}
+
+	public String getDescripcion() {
         return descripcion;
     }
 
