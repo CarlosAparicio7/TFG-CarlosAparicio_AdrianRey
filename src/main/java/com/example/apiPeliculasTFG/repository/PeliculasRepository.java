@@ -10,6 +10,6 @@ import java.util.List;
 @Repository
 public interface PeliculasRepository extends JpaRepository<Peliculas, String> {
 
-    @Query("SELECT new com.example.apiPeliculasTFG.entity.PeliculaDTO(p.id, p.nombre, p.portada, p.descripcion, p.valoracion) FROM Peliculas p")
+    @Query("SELECT new com.example.apiPeliculasTFG.entity.PeliculaDTO(p.id, p.nombre, p.portada, p.descripcion, p.director, p.genero, p.valoracion) FROM Peliculas p")
     List<PeliculaDTO> findAllDTO();
 }

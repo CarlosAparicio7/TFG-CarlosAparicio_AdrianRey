@@ -28,10 +28,11 @@ public class PeliculasController {
             @RequestParam("nombre") String nombre,
             @RequestParam("portada") String portada,
             @RequestParam("descripcion") String descripcion,
-            @RequestParam("valoracion") double valoracion,
+            @RequestParam("director") String director,
+            @RequestParam("genero") String genero,
             @RequestParam("archivo") MultipartFile archivo) {
         try {
-            Peliculas nueva = peliculasService.guardarPelicula(nombre, portada, descripcion, valoracion, archivo);
+            Peliculas nueva = peliculasService.guardarPelicula(nombre, portada, descripcion, director, genero, archivo);
             return ResponseEntity.ok(nueva);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
@@ -59,10 +60,12 @@ public class PeliculasController {
             @RequestParam("nombre") String nombre,
             @RequestParam("portada") String portada,
             @RequestParam("descripcion") String descripcion,
+            @RequestParam("director") String director,
+            @RequestParam("genero") String genero,
             @RequestParam("valoracion") double valoracion,
             @RequestParam(value = "archivo", required = false) MultipartFile archivo) {
         try {
-            Peliculas editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, valoracion, archivo);
+            Peliculas editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, director, genero, valoracion, archivo);
             return ResponseEntity.ok(editada);
         } catch (IOException e) {
             return ResponseEntity.internalServerError().build();
