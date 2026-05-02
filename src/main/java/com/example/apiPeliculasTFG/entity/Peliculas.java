@@ -10,8 +10,12 @@ public class Peliculas {
     private String id;
 
     private String nombre;
+    @Column(columnDefinition = "TEXT")
     private String portada;
+
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
+
     private String director;
     private String genero;
     private double valoracion;

@@ -17,10 +17,14 @@ public class UsuariosController {
 
     @PostMapping("/crearSesion")
     public ResponseEntity<Usuarios> crearSesion(@RequestBody Usuarios nuevoUsuario) {
-        if (nuevoUsuario.getAvatarIcon() == null) {
-            nuevoUsuario.setAvatarIcon("");
+        if (nuevoUsuario.getAvatarIcon() == null || nuevoUsuario.getAvatarIcon().isEmpty()) {
+            nuevoUsuario.setAvatarIcon(""); 
         }
-        nuevoUsuario.setRol("USER");
+        
+        if (nuevoUsuario.getRol() == null || nuevoUsuario.getRol().isEmpty()) {
+            nuevoUsuario.setRol("USER");
+        }
+        
         Usuarios creado = usuariosService.crearUsuario(nuevoUsuario);
         return ResponseEntity.ok(creado);
     }
@@ -31,7 +35,7 @@ public class UsuariosController {
             Usuarios usuario = usuariosService.login(loginData.getEmail(), loginData.getPassword());
             return ResponseEntity.ok(usuario);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body("Ha fallado: " + e.getMessage());
+            return ResponseEntity.status(401).body(e.getMessage());
         }
     }
 

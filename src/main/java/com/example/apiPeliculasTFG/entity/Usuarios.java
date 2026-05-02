@@ -13,7 +13,10 @@ public class Usuarios {
     private String nombre;
     
     private String apellido;
+
+    @Column(columnDefinition = "TEXT")
     private String avatarIcon;
+
     private String rol;
 
     @Column(nullable = false, unique = true)
