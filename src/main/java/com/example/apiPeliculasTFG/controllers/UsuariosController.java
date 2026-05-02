@@ -15,54 +15,28 @@ public class UsuariosController {
     private UsuariosService usuariosService;
 
     @PostMapping("/crearSesion")
-    public Usuarios crearSesion(
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam(value = "avatarIcon", required = false) String avatarIcon) {
-
-        Usuarios nuevoUsuario = new Usuarios();
-        nuevoUsuario.setNombre(nombre);
-        nuevoUsuario.setApellido(apellido);
-        nuevoUsuario.setEmail(email);
-        nuevoUsuario.setPassword(password);
-        nuevoUsuario.setAvatarIcon(avatarIcon != null ? avatarIcon : "");
+    public ResponseEntity<Usuarios> crearSesion(@RequestBody Usuarios nuevoUsuario) {
+        if (nuevoUsuario.getAvatarIcon() == null) {
+            nuevoUsuario.setAvatarIcon("");
+        }
         nuevoUsuario.setRol("USER");
-
-        return usuariosService.crearUsuario(nuevoUsuario);
+        Usuarios creado = usuariosService.crearUsuario(nuevoUsuario);
+        return ResponseEntity.ok(creado);
     }
 
     @PostMapping("/iniciarSesion")
-    public ResponseEntity<String> iniciarSesion(
-            @RequestParam("email") String email,
-            @RequestParam("password") String password) {
+    public ResponseEntity<?> iniciarSesion(@RequestBody Usuarios loginData) {
         try {
-            usuariosService.login(email, password);
-            return ResponseEntity.ok("Ha pasado");
+            Usuarios usuario = usuariosService.login(loginData.getEmail(), loginData.getPassword());
+            return ResponseEntity.ok(usuario);
         } catch (RuntimeException e) {
-            return ResponseEntity.status(401).body("Ha fallado");
+            return ResponseEntity.status(401).body("Ha fallado: " + e.getMessage());
         }
     }
 
     @PutMapping("/actualizarUsuario/{id}")
-    public Usuarios actualizarUsuario(
-            @PathVariable String id,
-            @RequestParam("nombre") String nombre,
-            @RequestParam("apellido") String apellido,
-            @RequestParam("email") String email,
-            @RequestParam("password") String password,
-            @RequestParam("avatarIcon") String avatarIcon,
-            @RequestParam("rol") String rol) {
-
-        Usuarios usuarioData = new Usuarios();
-        usuarioData.setNombre(nombre);
-        usuarioData.setApellido(apellido);
-        usuarioData.setEmail(email);
-        usuarioData.setPassword(password);
-        usuarioData.setAvatarIcon(avatarIcon);
-        usuarioData.setRol(rol);
-
-        return usuariosService.actualizarUsuario(id, usuarioData);
+    public ResponseEntity<Usuarios> actualizarUsuario(@PathVariable String id, @RequestBody Usuarios usuarioData) {
+        Usuarios actualizado = usuariosService.actualizarUsuario(id, usuarioData);
+        return ResponseEntity.ok(actualizado);
     }
 }
