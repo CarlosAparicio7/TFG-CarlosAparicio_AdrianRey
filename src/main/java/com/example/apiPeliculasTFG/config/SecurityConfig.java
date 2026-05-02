@@ -16,19 +16,21 @@ import java.util.Arrays;
 @EnableWebSecurity
 public class SecurityConfig {
 
-    @Bean
-    public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
-        http
-            .cors(cors -> cors.configurationSource(corsConfigurationSource()))
-            .csrf(csrf -> csrf.disable())
-            .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
-            .authorizeHttpRequests(auth -> auth
-                .requestMatchers("/**").permitAll()
-                .anyRequest().permitAll()
-            );
-        
-        return http.build();
-    }
+	@Bean
+	public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
+	    http
+	        .cors(cors -> cors.configurationSource(corsConfigurationSource()))
+	        .csrf(csrf -> csrf.disable())
+	        .sessionManagement(session -> session.sessionCreationPolicy(SessionCreationPolicy.STATELESS))
+	        .authorizeHttpRequests(auth -> auth
+	            .requestMatchers("/peliculas/especifica/**").authenticated()
+	            .requestMatchers("/peliculas/guardarPelicula").authenticated()
+	            .requestMatchers("/usuarios/actualizarUsuario/**").authenticated()
+	            .anyRequest().permitAll()
+	        );
+	    
+	    return http.build();
+	}
 
     @Bean
     public CorsConfigurationSource corsConfigurationSource() {
