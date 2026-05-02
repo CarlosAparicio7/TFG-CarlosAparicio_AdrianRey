@@ -33,13 +33,15 @@ public class PeliculasService {
     public Peliculas guardarPelicula(String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo) {
         try {
             Path directorio = Paths.get(CARPETA_VIDEOS);
-            if (!Files.exists(directorio)) {
+            if (Files.notExists(directorio)) {
                 Files.createDirectories(directorio);
             }
 
-            String nombreArchivo = UUID.randomUUID().toString() + "_" + archivo.getOriginalFilename();
+            String originalName = archivo.getOriginalFilename();
+            String safeName = (originalName != null ? originalName : "video").replaceAll("[^a-zA-Z0-9.]", "_");
+            String nombreArchivo = UUID.randomUUID().toString() + "_" + safeName;
+            
             Path rutaCompleta = directorio.resolve(nombreArchivo);
-
             Files.copy(archivo.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
 
             Peliculas peli = new Peliculas();
@@ -53,7 +55,7 @@ public class PeliculasService {
 
             return peliculasRepository.save(peli);
         } catch (IOException e) {
-            throw new RuntimeException("Error al guardar el video en el disco: " + e.getMessage());
+            throw new RuntimeException("Error al escribir el archivo: " + e.getMessage());
         }
     }
 
