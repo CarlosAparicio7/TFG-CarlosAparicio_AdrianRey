@@ -1,8 +1,6 @@
 package com.example.apiPeliculasTFG.entity;
 
 import jakarta.persistence.*;
-import org.hibernate.annotations.JdbcTypeCode;
-import java.sql.Types;
 
 @Entity
 public class Peliculas {
@@ -17,17 +15,12 @@ public class Peliculas {
     private String director;
     private String genero;
     private double valoracion;
-
-    @Lob
-    @Basic(fetch = FetchType.LAZY)
-    @Column(name = "archivo_video", columnDefinition = "bytea")
-    @JdbcTypeCode(Types.BINARY)
-    private byte[] archivoVideo;
+    private String urlVideo;
 
     public Peliculas() {
     }
 
-    public Peliculas(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, byte[] archivoVideo) {
+    public Peliculas(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, String urlVideo) {
         this.id = id;
         this.nombre = nombre;
         this.portada = portada;
@@ -35,7 +28,7 @@ public class Peliculas {
         this.director = director;
         this.genero = genero;
         this.valoracion = valoracion;
-        this.archivoVideo = archivoVideo;
+        this.urlVideo = urlVideo;
     }
 
     public String getId() {
@@ -55,14 +48,14 @@ public class Peliculas {
     }
 
     public String getPortada() {
-		return portada;
-	}
+        return portada;
+    }
 
-	public void setPortada(String portada) {
-		this.portada = portada;
-	}
+    public void setPortada(String portada) {
+        this.portada = portada;
+    }
 
-	public String getDescripcion() {
+    public String getDescripcion() {
         return descripcion;
     }
 
@@ -71,22 +64,22 @@ public class Peliculas {
     }
 
     public String getDirector() {
-		return director;
-	}
+        return director;
+    }
 
-	public void setDirector(String director) {
-		this.director = director;
-	}
+    public void setDirector(String director) {
+        this.director = director;
+    }
 
-	public String getGenero() {
-		return genero;
-	}
+    public String getGenero() {
+        return genero;
+    }
 
-	public void setGenero(String genero) {
-		this.genero = genero;
-	}
+    public void setGenero(String genero) {
+        this.genero = genero;
+    }
 
-	public double getValoracion() {
+    public double getValoracion() {
         return valoracion;
     }
 
@@ -94,11 +87,11 @@ public class Peliculas {
         this.valoracion = valoracion;
     }
 
-    public byte[] getArchivoVideo() {
-        return archivoVideo;
+    public String getUrlVideo() {
+        return urlVideo;
     }
 
-    public void setArchivoVideo(byte[] archivoVideo) {
-        this.archivoVideo = archivoVideo;
+    public void setUrlVideo(String urlVideo) {
+        this.urlVideo = urlVideo;
     }
 }
