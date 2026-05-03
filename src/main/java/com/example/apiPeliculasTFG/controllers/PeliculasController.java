@@ -7,6 +7,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
 import java.util.List;
 
 @RestController
@@ -35,6 +36,23 @@ public class PeliculasController {
         Peliculas nuevaPeli = peliculasService.guardarPelicula(nombre, portada, descripcion, director, genero, valoracion, archivo);
         return ResponseEntity.ok(nuevaPeli);
     }
+    
+    @PutMapping("/editarPelicula/{id}")
+    public ResponseEntity<Peliculas> editarPelicula(
+            @PathVariable String id,
+            @RequestParam("nombre") String nombre,
+            @RequestParam("portada") String portada,
+            @RequestParam("descripcion") String descripcion,
+            @RequestParam("director") String director,
+            @RequestParam("genero") String genero,
+            @RequestParam("valoracion") double valoracion,
+            @RequestParam(value = "archivo", required = false) MultipartFile archivo) throws IOException {
+    	
+    	Peliculas editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, director, genero, valoracion, archivo);
+        return ResponseEntity.ok(editada);
+    	
+    }
+       
 
     @GetMapping("/verPelicula/{id}")
     public ResponseEntity<Peliculas> obtenerPorId(@PathVariable String id) {

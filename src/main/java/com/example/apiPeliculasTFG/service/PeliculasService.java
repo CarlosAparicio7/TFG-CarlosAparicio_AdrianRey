@@ -59,6 +59,40 @@ public class PeliculasService {
             throw new RuntimeException("Error al escribir el archivo: " + e.getMessage());
         }
     }
+    
+    public Peliculas actualizarPelicula(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo) throws IOException {
+        Peliculas peli = peliculasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Película no encontrada con id: " + id));
+
+        peli.setNombre(nombre);
+        peli.setPortada(portada);
+        peli.setDescripcion(descripcion);
+        peli.setDirector(director);
+        peli.setGenero(genero);     
+        peli.setValoracion(valoracion);
+
+        if (archivo != null && !archivo.isEmpty()) {
+            if (peli.getUrlVideo() != null) {
+                Files.deleteIfExists(Paths.get(CARPETA_VIDEOS + peli.getUrlVideo()));
+            }
+
+            String originalName = archivo.getOriginalFilename();
+            String safeName = (originalName != null ? originalName : "video").replaceAll("[^a-zA-Z0-9.]", "_");
+            String nuevoNombreArchivo = UUID.randomUUID().toString() + "_" + safeName;
+            
+            Path directorio = Paths.get(CARPETA_VIDEOS);
+            if (Files.notExists(directorio)) {
+                Files.createDirectories(directorio);
+            }
+
+            Path rutaCompleta = directorio.resolve(nuevoNombreArchivo);
+            Files.copy(archivo.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+
+            peli.setUrlVideo(nuevoNombreArchivo);
+        }
+
+        return peliculasRepository.save(peli);
+    }
 
     public void eliminarPelicula(String id) {
         Peliculas peli = buscarPorId(id);
