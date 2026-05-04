@@ -31,20 +31,8 @@ public class PeliculasService {
         return peliculasRepository.findById(id).orElse(null);
     }
 
-    public Peliculas guardarPelicula(String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo) {
+    public Peliculas guardarPelicula(String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo, String urlVideo) {
         try {
-            Path directorio = Paths.get(CARPETA_VIDEOS);
-            if (Files.notExists(directorio)) {
-                Files.createDirectories(directorio);
-            }
-
-            String originalName = archivo.getOriginalFilename();
-            String safeName = (originalName != null ? originalName : "video").replaceAll("[^a-zA-Z0-9.]", "_");
-            String nombreArchivo = UUID.randomUUID().toString() + "_" + safeName;
-            
-            Path rutaCompleta = directorio.resolve(nombreArchivo);
-            Files.copy(archivo.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
-
             Peliculas peli = new Peliculas();
             peli.setNombre(nombre);
             peli.setPortada(portada);
@@ -52,7 +40,24 @@ public class PeliculasService {
             peli.setDirector(director);
             peli.setGenero(genero);
             peli.setValoracion(valoracion);
-            peli.setUrlVideo(nombreArchivo);
+
+            if (archivo != null && !archivo.isEmpty()) {
+                Path directorio = Paths.get(CARPETA_VIDEOS);
+                if (Files.notExists(directorio)) {
+                    Files.createDirectories(directorio);
+                }
+
+                String originalName = archivo.getOriginalFilename();
+                String safeName = (originalName != null ? originalName : "video").replaceAll("[^a-zA-Z0-9.]", "_");
+                String nombreArchivo = UUID.randomUUID().toString() + "_" + safeName;
+                
+                Path rutaCompleta = directorio.resolve(nombreArchivo);
+                Files.copy(archivo.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
+                
+                peli.setUrlVideo(nombreArchivo);
+            } else {
+                peli.setUrlVideo(urlVideo);
+            }
 
             return peliculasRepository.save(peli);
         } catch (IOException e) {

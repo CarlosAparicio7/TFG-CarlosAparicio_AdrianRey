@@ -31,9 +31,10 @@ public class PeliculasController {
             @RequestParam("director") String director,
             @RequestParam("genero") String genero,
             @RequestParam("valoracion") double valoracion,
-            @RequestParam("archivo") MultipartFile archivo) {
+            @RequestParam(value = "archivo", required = false) MultipartFile archivo,
+            @RequestParam("urlVideo") String urlVideo) {
         
-        Peliculas nuevaPeli = peliculasService.guardarPelicula(nombre, portada, descripcion, director, genero, valoracion, archivo);
+        Peliculas nuevaPeli = peliculasService.guardarPelicula(nombre, portada, descripcion, director, genero, valoracion, archivo, urlVideo);
         return ResponseEntity.ok(nuevaPeli);
     }
     
@@ -52,7 +53,7 @@ public class PeliculasController {
         return ResponseEntity.ok(editada);
     	
     }
-       
+        
 
     @GetMapping("/verPelicula/{id}")
     public ResponseEntity<Peliculas> obtenerPorId(@PathVariable String id) {

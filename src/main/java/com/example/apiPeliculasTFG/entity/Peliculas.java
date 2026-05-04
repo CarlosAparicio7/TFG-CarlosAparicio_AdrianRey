@@ -19,6 +19,8 @@ public class Peliculas {
     private String director;
     private String genero;
     private double valoracion;
+    
+    @Column(columnDefinition = "TEXT")
     private String urlVideo;
 
     public Peliculas() {
