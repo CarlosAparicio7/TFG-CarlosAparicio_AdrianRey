@@ -28,10 +28,6 @@ public class PeliculasService {
         return peliculasRepository.findAllDTO();
     }
 
-    public List<Peliculas> listarTodas() {
-        return peliculasRepository.findAll();
-    }
-
     public Peliculas buscarPorId(String id) {
         return peliculasRepository.findById(id).orElse(null);
     }

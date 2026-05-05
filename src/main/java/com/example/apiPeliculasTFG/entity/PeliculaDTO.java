@@ -1,10 +1,19 @@
 package com.example.apiPeliculasTFG.entity;
 
+import jakarta.persistence.Column;
+import jakarta.persistence.GeneratedValue;
+import jakarta.persistence.GenerationType;
+import jakarta.persistence.Id;
+
 public class PeliculaDTO {
 
+    @Id
+    @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String nombre;
+    @Column(columnDefinition = "TEXT")
     private String portada;
+    @Column(columnDefinition = "TEXT")
     private String descripcion;
     private String director;
     private String genero;
@@ -16,6 +25,7 @@ public class PeliculaDTO {
     public PeliculaDTO(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion) {
         this.id = id;
         this.nombre = nombre;
+        this.portada = portada;
         this.descripcion = descripcion;
         this.director = director;
         this.genero = genero;
