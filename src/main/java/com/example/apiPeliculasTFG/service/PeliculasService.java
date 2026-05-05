@@ -5,6 +5,7 @@ import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
 import com.example.apiPeliculasTFG.entity.Peliculas;
+import com.example.apiPeliculasTFG.entity.PeliculaDTO;
 import com.example.apiPeliculasTFG.repository.PeliculasRepository;
 
 import java.io.IOException;
@@ -22,6 +23,10 @@ public class PeliculasService {
     private PeliculasRepository peliculasRepository;
 
     private final String CARPETA_VIDEOS = "C:/tfg_videos/";
+
+    public List<PeliculaDTO> listarTodasDTO() {
+        return peliculasRepository.findAllDTO();
+    }
 
     public List<Peliculas> listarTodas() {
         return peliculasRepository.findAll();

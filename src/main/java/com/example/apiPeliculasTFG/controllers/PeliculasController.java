@@ -1,6 +1,7 @@
 package com.example.apiPeliculasTFG.controllers;
 
 import com.example.apiPeliculasTFG.entity.Peliculas;
+import com.example.apiPeliculasTFG.entity.PeliculaDTO;
 import com.example.apiPeliculasTFG.service.PeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -19,8 +20,8 @@ public class PeliculasController {
     private PeliculasService peliculasService;
 
     @GetMapping("/listarPeliculas")
-    public List<Peliculas> listar() {
-        return peliculasService.listarTodas();
+    public List<PeliculaDTO> listar() {
+        return peliculasService.listarTodasDTO();
     }
 
     @PostMapping("/subirPelicula")
@@ -54,7 +55,6 @@ public class PeliculasController {
     	
     }
         
-
     @GetMapping("/verPelicula/{id}")
     public ResponseEntity<Peliculas> obtenerPorId(@PathVariable String id) {
         Peliculas peli = peliculasService.buscarPorId(id);
