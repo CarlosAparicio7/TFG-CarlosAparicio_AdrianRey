@@ -104,11 +104,19 @@ public class PeliculasService {
         Peliculas peli = buscarPorId(id);
         
         if (peli != null) {
-            if (peli.getUrlVideo() != null) {
-                try {
-                    Files.deleteIfExists(Paths.get(CARPETA_VIDEOS + peli.getUrlVideo()));
-                } catch (IOException e) {
-                    System.err.println("No se pudo eliminar el archivo físico: " + e.getMessage());
+            String videoPathOrUrl = peli.getUrlVideo();
+
+            if (videoPathOrUrl != null && !videoPathOrUrl.isEmpty()) {
+                boolean esUrlExterna = videoPathOrUrl.startsWith("http") || videoPathOrUrl.startsWith("https");
+
+                if (!esUrlExterna) {
+                    try {
+                        Files.deleteIfExists(Paths.get(CARPETA_VIDEOS + videoPathOrUrl));
+                    } catch (IOException e) {
+                        System.err.println("No se pudo eliminar el archivo físico: " + e.getMessage());
+                    } catch (Exception e) {
+                        System.err.println("Error inesperado en la ruta: " + e.getMessage());
+                    }
                 }
             }
             peliculasRepository.deleteById(id);
