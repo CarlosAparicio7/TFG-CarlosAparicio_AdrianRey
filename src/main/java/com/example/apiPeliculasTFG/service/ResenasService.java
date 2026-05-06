@@ -24,6 +24,7 @@ public class ResenasService {
         return resenasRepository.findById(id).map(resenaExistente -> {
             resenaExistente.setComentario(resenaActualizada.getComentario());
             resenaExistente.setNumeroEstrellas(resenaActualizada.getNumeroEstrellas());
+            
             return resenasRepository.save(resenaExistente);
         }).orElseThrow(() -> new RuntimeException("Resena no encontrada con ID: " + id));
     }

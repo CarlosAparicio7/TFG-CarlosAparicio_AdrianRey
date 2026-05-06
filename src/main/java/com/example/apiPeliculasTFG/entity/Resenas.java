@@ -4,6 +4,8 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.ManyToOne;
+import jakarta.persistence.JoinColumn;
 
 @Entity
 public class Resenas {
@@ -14,11 +16,21 @@ public class Resenas {
     
     private String comentario;
     private double numeroEstrellas;
+
+    @ManyToOne
+    @JoinColumn(name = "usuario_id")
+    private Usuarios usuario;
+
+    @ManyToOne
+    @JoinColumn(name = "pelicula_id")
+    private ListaPeliculas pelicula;
     
-    public Resenas(String id, String comentario, double numeroEstrellas) {
+    public Resenas(String id, String comentario, double numeroEstrellas, Usuarios usuario, ListaPeliculas pelicula) {
         this.id = id;
         this.comentario = comentario;
         this.numeroEstrellas = numeroEstrellas;
+        this.usuario = usuario;
+        this.pelicula = pelicula;
     }
 
     public Resenas() {
@@ -46,5 +58,21 @@ public class Resenas {
 
     public void setNumeroEstrellas(double numeroEstrellas) {
         this.numeroEstrellas = numeroEstrellas;
+    }
+
+    public Usuarios getUsuario() {
+        return usuario;
+    }
+
+    public void setUsuario(Usuarios usuario) {
+        this.usuario = usuario;
+    }
+
+    public ListaPeliculas getPelicula() {
+        return pelicula;
+    }
+
+    public void setPelicula(ListaPeliculas pelicula) {
+        this.pelicula = pelicula;
     }
 }

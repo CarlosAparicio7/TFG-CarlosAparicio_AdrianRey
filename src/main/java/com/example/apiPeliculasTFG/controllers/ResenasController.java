@@ -5,6 +5,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 import com.example.apiPeliculasTFG.entity.Resenas;
+import com.example.apiPeliculasTFG.entity.ListaPeliculas;
+import com.example.apiPeliculasTFG.entity.Usuarios;
 import com.example.apiPeliculasTFG.service.ResenasService;
 
 @RestController
@@ -23,11 +25,21 @@ public class ResenasController {
     @PostMapping("/crearResena")
     public Resenas crearResena(
             @RequestParam("comentario") String comentario,
-            @RequestParam("numeroEstrellas") double numeroEstrellas) {
+            @RequestParam("numeroEstrellas") double numeroEstrellas,
+            @RequestParam("peliculaId") String peliculaId,
+            @RequestParam("usuarioId") String usuarioId) {
 
         Resenas nuevoResena = new Resenas();
         nuevoResena.setComentario(comentario);
         nuevoResena.setNumeroEstrellas(numeroEstrellas);
+
+        ListaPeliculas peli = new ListaPeliculas();
+        peli.setId(peliculaId);
+        nuevoResena.setPelicula(peli);
+
+        Usuarios user = new Usuarios();
+        user.setId(usuarioId);
+        nuevoResena.setUsuario(user);
 
         return resenasService.crearResena(nuevoResena);
     }

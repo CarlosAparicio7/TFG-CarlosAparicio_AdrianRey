@@ -4,8 +4,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.web.multipart.MultipartFile;
 
-import com.example.apiPeliculasTFG.entity.Peliculas;
-import com.example.apiPeliculasTFG.entity.PeliculaDTO;
+import com.example.apiPeliculasTFG.entity.Pelicula;
+import com.example.apiPeliculasTFG.entity.ListaPeliculas;
 import com.example.apiPeliculasTFG.repository.PeliculasRepository;
 
 import java.io.IOException;
@@ -13,6 +13,7 @@ import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
 import java.nio.file.StandardCopyOption;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.UUID;
 
@@ -24,23 +25,25 @@ public class PeliculasService {
 
     private final String CARPETA_VIDEOS = "C:/tfg_videos/";
 
-    public List<PeliculaDTO> listarTodasDTO() {
+    public List<ListaPeliculas> listarTodasDTO() {
         return peliculasRepository.findAllDTO();
     }
 
-    public Peliculas buscarPorId(String id) {
+    public Pelicula buscarPorId(String id) {
         return peliculasRepository.findById(id).orElse(null);
     }
 
-    public Peliculas guardarPelicula(String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo, String urlVideo) {
+    public Pelicula guardarPelicula(String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo, String urlVideo) {
         try {
-            Peliculas peli = new Peliculas();
+            Pelicula peli = new Pelicula();
             peli.setNombre(nombre);
             peli.setPortada(portada);
             peli.setDescripcion(descripcion);
             peli.setDirector(director);
             peli.setGenero(genero);
             peli.setValoracion(valoracion);
+            
+            peli.setResenas(new ArrayList<>());
 
             if (archivo != null && !archivo.isEmpty()) {
                 Path directorio = Paths.get(CARPETA_VIDEOS);
@@ -66,8 +69,8 @@ public class PeliculasService {
         }
     }
     
-    public Peliculas actualizarPelicula(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo) throws IOException {
-        Peliculas peli = peliculasRepository.findById(id)
+    public Pelicula actualizarPelicula(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo) throws IOException {
+        Pelicula peli = peliculasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Película no encontrada con id: " + id));
 
         peli.setNombre(nombre);
@@ -101,7 +104,7 @@ public class PeliculasService {
     }
 
     public void eliminarPelicula(String id) {
-        Peliculas peli = buscarPorId(id);
+        Pelicula peli = buscarPorId(id);
         
         if (peli != null) {
             String videoPathOrUrl = peli.getUrlVideo();

@@ -1,28 +1,38 @@
 package com.example.apiPeliculasTFG.entity;
 
 import jakarta.persistence.Column;
+import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
+import jakarta.persistence.Inheritance;
+import jakarta.persistence.InheritanceType;
+import jakarta.persistence.Table;
 
-public class PeliculaDTO {
+@Entity
+@Table(name = "peliculas")
+@Inheritance(strategy = InheritanceType.SINGLE_TABLE)
+public class ListaPeliculas {
 
     @Id
     @GeneratedValue(strategy = GenerationType.UUID)
     private String id;
     private String nombre;
+    
     @Column(columnDefinition = "TEXT")
     private String portada;
+    
     @Column(columnDefinition = "TEXT")
     private String descripcion;
+    
     private String director;
     private String genero;
     private double valoracion;
 
-    public PeliculaDTO() {
+    public ListaPeliculas() {
     }
 
-    public PeliculaDTO(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion) {
+    public ListaPeliculas(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion) {
         this.id = id;
         this.nombre = nombre;
         this.portada = portada;

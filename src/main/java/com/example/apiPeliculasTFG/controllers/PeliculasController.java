@@ -1,7 +1,7 @@
 package com.example.apiPeliculasTFG.controllers;
 
-import com.example.apiPeliculasTFG.entity.Peliculas;
-import com.example.apiPeliculasTFG.entity.PeliculaDTO;
+import com.example.apiPeliculasTFG.entity.Pelicula;
+import com.example.apiPeliculasTFG.entity.ListaPeliculas;
 import com.example.apiPeliculasTFG.service.PeliculasService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
@@ -20,12 +20,12 @@ public class PeliculasController {
     private PeliculasService peliculasService;
 
     @GetMapping("/listarPeliculas")
-    public List<PeliculaDTO> listar() {
+    public List<ListaPeliculas> listar() {
         return peliculasService.listarTodasDTO();
     }
 
     @PostMapping("/subirPelicula")
-    public ResponseEntity<Peliculas> subirPelicula(
+    public ResponseEntity<Pelicula> subirPelicula(
             @RequestParam("nombre") String nombre,
             @RequestParam("portada") String portada,
             @RequestParam("descripcion") String descripcion,
@@ -35,12 +35,12 @@ public class PeliculasController {
             @RequestParam(value = "archivo", required = false) MultipartFile archivo,
             @RequestParam("urlVideo") String urlVideo) {
         
-        Peliculas nuevaPeli = peliculasService.guardarPelicula(nombre, portada, descripcion, director, genero, valoracion, archivo, urlVideo);
+        Pelicula nuevaPeli = peliculasService.guardarPelicula(nombre, portada, descripcion, director, genero, valoracion, archivo, urlVideo);
         return ResponseEntity.ok(nuevaPeli);
     }
     
     @PutMapping("/editarPelicula/{id}")
-    public ResponseEntity<Peliculas> editarPelicula(
+    public ResponseEntity<Pelicula> editarPelicula(
             @PathVariable String id,
             @RequestParam("nombre") String nombre,
             @RequestParam("portada") String portada,
@@ -50,14 +50,14 @@ public class PeliculasController {
             @RequestParam("valoracion") double valoracion,
             @RequestParam(value = "archivo", required = false) MultipartFile archivo) throws IOException {
     	
-    	Peliculas editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, director, genero, valoracion, archivo);
+    	Pelicula editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, director, genero, valoracion, archivo);
         return ResponseEntity.ok(editada);
     	
     }
         
     @GetMapping("/verPelicula/{id}")
-    public ResponseEntity<Peliculas> obtenerPorId(@PathVariable String id) {
-        Peliculas peli = peliculasService.buscarPorId(id);
+    public ResponseEntity<Pelicula> obtenerPorId(@PathVariable String id) {
+        Pelicula peli = peliculasService.buscarPorId(id);
         if (peli != null) {
             return ResponseEntity.ok(peli);
         } else {
