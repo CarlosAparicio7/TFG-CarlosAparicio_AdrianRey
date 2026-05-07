@@ -48,11 +48,11 @@ public class PeliculasController {
             @RequestParam("director") String director,
             @RequestParam("genero") String genero,
             @RequestParam("valoracion") double valoracion,
+            @RequestParam("urlVideo") String urlVideo,
             @RequestParam(value = "archivo", required = false) MultipartFile archivo) throws IOException {
-    	
-    	Pelicula editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, director, genero, valoracion, archivo);
+        
+        Pelicula editada = peliculasService.actualizarPelicula(id, nombre, portada, descripcion, director, genero, valoracion, urlVideo, archivo);
         return ResponseEntity.ok(editada);
-    	
     }
         
     @GetMapping("/verPelicula/{id}")

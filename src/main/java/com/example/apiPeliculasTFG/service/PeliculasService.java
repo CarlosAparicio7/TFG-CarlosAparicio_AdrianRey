@@ -69,9 +69,11 @@ public class PeliculasService {
         }
     }
     
-    public Pelicula actualizarPelicula(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, MultipartFile archivo) throws IOException {
+    public Pelicula actualizarPelicula(String id, String nombre, String portada, String descripcion, String director, String genero, double valoracion, String urlVideo, MultipartFile archivo) throws IOException {
         Pelicula peli = peliculasRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Película no encontrada con id: " + id));
+
+        String urlAnterior = peli.getUrlVideo();
 
         peli.setNombre(nombre);
         peli.setPortada(portada);
@@ -79,17 +81,22 @@ public class PeliculasService {
         peli.setDirector(director);
         peli.setGenero(genero);     
         peli.setValoracion(valoracion);
+        peli.setUrlVideo(urlVideo);
+
+        Path directorio = Paths.get(CARPETA_VIDEOS);
 
         if (archivo != null && !archivo.isEmpty()) {
-            if (peli.getUrlVideo() != null) {
-                Files.deleteIfExists(Paths.get(CARPETA_VIDEOS + peli.getUrlVideo()));
+            if (urlAnterior != null && !urlAnterior.isEmpty() && !urlAnterior.startsWith("http")) {
+                Path rutaArchivoAnterior = directorio.resolve(urlAnterior);
+                if (!Files.isDirectory(rutaArchivoAnterior)) {
+                    Files.deleteIfExists(rutaArchivoAnterior);
+                }
             }
 
             String originalName = archivo.getOriginalFilename();
             String safeName = (originalName != null ? originalName : "video").replaceAll("[^a-zA-Z0-9.]", "_");
             String nuevoNombreArchivo = UUID.randomUUID().toString() + "_" + safeName;
             
-            Path directorio = Paths.get(CARPETA_VIDEOS);
             if (Files.notExists(directorio)) {
                 Files.createDirectories(directorio);
             }
@@ -98,6 +105,13 @@ public class PeliculasService {
             Files.copy(archivo.getInputStream(), rutaCompleta, StandardCopyOption.REPLACE_EXISTING);
 
             peli.setUrlVideo(nuevoNombreArchivo);
+        } else {
+            if (urlAnterior != null && !urlAnterior.isEmpty() && !urlAnterior.startsWith("http") && !urlAnterior.equals(urlVideo)) {
+                Path rutaArchivoAnterior = directorio.resolve(urlAnterior);
+                if (!Files.isDirectory(rutaArchivoAnterior)) {
+                    Files.deleteIfExists(rutaArchivoAnterior);
+                }
+            }
         }
 
         return peliculasRepository.save(peli);
