@@ -17,6 +17,21 @@ public class ResenasService {
     }
 
     public Resenas crearResena(Resenas resena) {
+        if (resena.getUsuario() == null || resena.getPelicula() == null) {
+            throw new RuntimeException("Oye, estamos teniendo problemas técnicos. Por favor, espera pacientemente mientras lo solucionamos.");
+        }
+
+        String usuarioId = resena.getUsuario().getId();
+        String peliculaId = resena.getPelicula().getId();
+
+        boolean yaExiste = resenasRepository.findAll().stream()
+                .anyMatch(r -> r.getUsuario().getId().equals(usuarioId) 
+                            && r.getPelicula().getId().equals(peliculaId));
+
+        if (yaExiste) {
+            throw new RuntimeException("Ya has publicado una reseña para esta película.");
+        }
+
         return resenasRepository.save(resena);
     }
 

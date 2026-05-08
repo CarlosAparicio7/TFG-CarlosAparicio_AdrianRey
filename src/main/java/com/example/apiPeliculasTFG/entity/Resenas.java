@@ -1,13 +1,19 @@
 package com.example.apiPeliculasTFG.entity;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.JoinColumn;
+import jakarta.persistence.Table;
+import jakarta.persistence.UniqueConstraint;
 
 @Entity
+@Table(name = "resenas", uniqueConstraints = {
+    @UniqueConstraint(columnNames = {"usuario_id", "pelicula_id"})
+})
 public class Resenas {
 
     @Id
@@ -19,10 +25,12 @@ public class Resenas {
 
     @ManyToOne
     @JoinColumn(name = "usuario_id")
+    @JsonIgnoreProperties({"resenas", "password"})
     private Usuarios usuario;
 
     @ManyToOne
     @JoinColumn(name = "pelicula_id")
+    @JsonIgnoreProperties("resenas")
     private ListaPeliculas pelicula;
     
     public Resenas(String id, String comentario, double numeroEstrellas, Usuarios usuario, ListaPeliculas pelicula) {
