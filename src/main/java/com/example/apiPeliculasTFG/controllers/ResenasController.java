@@ -67,7 +67,8 @@ public class ResenasController {
             Resenas resenaData = new Resenas();
             resenaData.setComentario(comentario);
             resenaData.setNumeroEstrellas(numeroEstrellas);
-            return ResponseEntity.ok(resenasService.actualizarResena(id, resenaData));
+            Resenas actualizada = resenasService.actualizarResena(id, resenaData);
+            return ResponseEntity.ok(actualizada);
         } catch (RuntimeException e) {
             return ResponseEntity.status(404).body(Map.of("detalle", e.getMessage()));
         }
