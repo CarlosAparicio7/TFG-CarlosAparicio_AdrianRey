@@ -15,6 +15,11 @@ public class ResenasService {
     public List<Resenas> obtenerTodos() {
         return resenasRepository.findAll();
     }
+    
+    public Resenas obtenerPorId(String id) {
+        return resenasRepository.findById(id)
+                .orElseThrow(() -> new RuntimeException("Resena no encontrada con ID: " + id));
+    }
 
     public Resenas crearResena(Resenas resena) {
         if (resena.getUsuario() == null || resena.getPelicula() == null) {

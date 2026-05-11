@@ -22,6 +22,16 @@ public class ResenasController {
     public List<Resenas> listarResenas() {
         return resenasService.obtenerTodos();
     }
+    
+    @GetMapping("/obtenerResena/{id}")
+    public ResponseEntity<Resenas> obtenerResena(@PathVariable String id) {
+        try {
+            Resenas resena = resenasService.obtenerPorId(id);
+            return ResponseEntity.ok(resena);
+        } catch (RuntimeException e) {
+            return ResponseEntity.status(404).build(); 
+        }
+    }
 
     @PostMapping("/crearResena")
     public ResponseEntity<?> crearResena(
