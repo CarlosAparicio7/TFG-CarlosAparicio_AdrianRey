@@ -21,7 +21,7 @@ public class PeliculasController {
 
     @GetMapping("/listarPeliculas")
     public List<ListaPeliculas> listar() {
-        return peliculasService.listarTodasDTO();
+        return peliculasService.listarSoloPublicadas();
     }
 
     @PostMapping("/subirPelicula")
@@ -69,5 +69,16 @@ public class PeliculasController {
     public ResponseEntity<Void> eliminar(@PathVariable String id) {
         peliculasService.eliminarPelicula(id);
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/borradores")
+    public List<ListaPeliculas> listarBorradores() {
+        return peliculasService.listarSoloBorradores();
+    }
+
+    @PutMapping("/aceptar/{id}")
+    public ResponseEntity<Void> aceptar(@PathVariable String id) {
+        peliculasService.publicarPelicula(id);
+        return ResponseEntity.ok().build();
     }
 }

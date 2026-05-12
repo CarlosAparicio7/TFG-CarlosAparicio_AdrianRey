@@ -28,6 +28,7 @@ public class ListaPeliculas {
     private String director;
     private String genero;
     private double valoracion;
+    private boolean publicada = false;
 
     public ListaPeliculas() {
     }
@@ -96,5 +97,13 @@ public class ListaPeliculas {
 
     public void setValoracion(double valoracion) {
         this.valoracion = valoracion;
+    }
+    
+    public boolean isPublicada() {
+        return publicada;
+    }
+
+    public void setPublicada(boolean publicada) {
+        this.publicada = publicada;
     }
 }
