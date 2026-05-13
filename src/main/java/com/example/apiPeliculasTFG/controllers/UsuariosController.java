@@ -1,6 +1,7 @@
 package com.example.apiPeliculasTFG.controllers;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -16,17 +17,23 @@ public class UsuariosController {
     private UsuariosService usuariosService;
 
     @PostMapping("/crearSesion")
-    public ResponseEntity<Usuarios> crearSesion(@RequestBody Usuarios nuevoUsuario) {
-        if (nuevoUsuario.getAvatarIcon() == null || nuevoUsuario.getAvatarIcon().isEmpty()) {
-            nuevoUsuario.setAvatarIcon(""); 
+    public ResponseEntity<?> crearSesion(@RequestBody Usuarios nuevoUsuario) {
+        try {
+            if (nuevoUsuario.getAvatarIcon() == null || nuevoUsuario.getAvatarIcon().isEmpty()) {
+                nuevoUsuario.setAvatarIcon(""); 
+            }
+            
+            if (nuevoUsuario.getRol() == null || nuevoUsuario.getRol().isEmpty()) {
+                nuevoUsuario.setRol("USER");
+            }
+            
+            Usuarios creado = usuariosService.crearUsuario(nuevoUsuario);
+            return ResponseEntity.ok(creado);
+        } catch (org.springframework.dao.DataIntegrityViolationException e) {
+            return ResponseEntity.status(HttpStatus.CONFLICT).body("Email-duplicado");
+        } catch (Exception e) {
+            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).build();
         }
-        
-        if (nuevoUsuario.getRol() == null || nuevoUsuario.getRol().isEmpty()) {
-            nuevoUsuario.setRol("USER");
-        }
-        
-        Usuarios creado = usuariosService.crearUsuario(nuevoUsuario);
-        return ResponseEntity.ok(creado);
     }
 
     @PostMapping("/iniciarSesion")
